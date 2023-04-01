@@ -1,0 +1,30 @@
+#+title: Aby
+#+author: Ruben Philipp
+#+date: [2023-04-01 Sat]
+#+startup: showall
+
+$$ Last modified:  23:13:42 Sat Apr  1 2023 CEST
+
+* About
+
+Aby[fn:1] is a simple fragment/snippet manager for [[https://www.gnu.org/software/emacs/][Emacs]]. It lets you easily insert
+the contents of files from a designated snippets directory in an Emacs buffer
+by using the command ~aby-insert~. 
+
+** Example
+
+~M-x aby-insert lisp/robodoc-class~
+
+will search for a file =robodoc-class.el= in the =lisp= sub-directory of the
+current buffer. This file contains further instructions on how to parse
+the source file of the template. The latter is located in the same directory
+as the /instruction file/ and can be a file with any extension.[fn:2]
+
+The code from the /instruction file/ must return a string which will then
+be inserted into the current buffer. 
+
+* Footnotes
+[fn:1] https://en.wikipedia.org/wiki/Aby_Warburg 
+
+[fn:2] This enables proper syntax highlighting and indentation, which is
+especially valuable when working with code files.
