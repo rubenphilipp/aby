@@ -1,0 +1,13 @@
+#+title: snippets
+#+author: Ruben Philipp
+#+date: [2023-04-01 Sat]
+#+startup: showall 
+
+$$ Last modified:  15:22:43 Sat Apr  1 2023 CEST
+
+* PURPOSE
+
+This directory contains code-snippets to be inserted via custom bindings in
+the ~.emacs~ file, using ~insert-file-contents~.
+
+- https://www.gnu.org/software/emacs/manual/html_node/elisp/Reading-from-Files.html
