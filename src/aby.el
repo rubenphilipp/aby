@@ -81,10 +81,11 @@
 ;;; DESCRIPTION
 ;;; A list of replacements with the default replacement rules.
 ;;; Must be of the following form:
-;;; ((var1 placeholder1 replacement1)
-;;;  (var2 placeholder2 replacement2)
+;;; ((var1 regex1 replacement1 comment1)
+;;;  (var2 regex2 replacement2 comment2)
 ;;;  ;; ...
-;;;  (varn placeholdern replacementn))
+;;;  (varn regexn replacementn commentn))
+;;; NB: The comment serves documentation purposes and is optional.
 ;;; ****
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defcustom aby-auto-replacements nil
@@ -98,7 +99,7 @@
 ;;; The default extension for Aby instruction files. Default: "el". 
 ;;; ****
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defcustom aby-file-extension "el"
+(defcustom aby-file-extension "aby.el"
   "The default extension for Aby instruction files.")
 
 
@@ -128,11 +129,19 @@
 ;;; SYNOPSIS
 (defun aby-get-instruction-files ()
   ;;; ****
-  (let ((files (directory-files-recursively aby-fragments-dir "el"))
+  (let ((files (directory-files-recursively aby-fragments-dir
+                                            aby-file-extension))
         (rel-dir (expand-file-name aby-fragments-dir)))
     (mapcar #'(lambda (f)
-                (file-relative-name 
-                 (file-name-sans-extension f)
+                (file-relative-name
+                 ;; removed as file-names can contain more than one
+                 ;; dot
+                 ;; RP  Sun Apr  2 22:58:57 2023
+                 ;;(file-name-sans-extension f)
+                 (replace-regexp-in-string (concat "."
+                                                   aby-file-extension
+                                                   "$")
+                                           "" f)
                  rel-dir))
             files)))
 
@@ -183,28 +192,47 @@
 ;;; OPTIONAL ARGUMENTS
 ;;; - static-rep. A list of three-item-lists with the static, i.e. "hard coded"
 ;;;   replacements. The list must take the form:
-;;;   ((var1 placeholder1 value1)
-;;;    (var2 placeholder2 value2)
+;;;   ((var1 regex1 value1 comment1)
+;;;    (var2 regex2 value2 comment2)
 ;;;    ;; ...
-;;;    (varn placeholdern valuen))
+;;;    (varn regexn valuen commentn))
 ;;;   The first element must be a symbol which serves as the index for the
 ;;;   association list which is parsed during the aby-insert prodecure. This
 ;;;   enables accessing the value via a dynamic-rep.
+;;;   The comment (string) serves documentation purposes and is optional. 
 ;;;   Default= NIL.
-;;; - ask-rep. A list of two-item-lists with the placeholders to interactively
-;;;   replace. The placeholders will be interactively replaced with values
+;;; - ask-rep. A list of two-item-lists with the regexs to interactively
+;;;   replace. The regexs will be interactively replaced with values
 ;;;   given by the user by prompting. The list must take the form:
-;;;   ((var1 placeholder1)
-;;;    (var2 placeholder2)
+;;;   ((var1 regex1 prompt1 comment1)
+;;;    (var2 regex2 prompt2 comment2)
 ;;;    ;; ...
-;;;    (varn placeholdern))
+;;;    (varn regexn promptn commentn))
+;;;   The prompt must be a string which will be printed in the Minibuffer
+;;;   during the read-string query. If it is NIL, the regex will be displayed.
+;;;   The comment (string) serves documentation purposes and is optional.
 ;;;   Default = NIL.
 ;;; - dynamic-rep. A list of three-item-lists of the form:
-;;;   ((varn placeholdern functionn) ... )
+;;;   ((var1 regex1 function1 comment1)
+;;;    (var2 regex2 function2 comment2)
+;;;    ;; ...
+;;;    (varn regexn functionn commentn))
 ;;;   The function must be either a lambda or existing function that takes
 ;;;   the replacements association list as first argument and returns the
-;;;   replacement value as a string. Default = NIL.
-;;; NB: All var items in the *-rep arguments (i.e. the car) must be unique!
+;;;   replacement value as a string.
+;;;   The comment (string) serves documentation purposes and is optional.
+;;;   NB: aby-insert automatically adds the 'aby-fragment-directory to the
+;;;       which is the file-name-directory of the instruction file. This is
+;;;       very useful when loading additional fragment files in the ask-rep
+;;;       lambda function. See examples/org/lilypond-src.el for an example.
+;;;   Default = NIL.
+;;; NB 1: All var items in the *-rep arguments (i.e. the car) must be unique!
+;;; NB 2: When the regex is NIL, no replacements will take place. Instead,
+;;;       the value from the list respectively the prompt (in case of ask-rep)
+;;;       will be stored in the replacement list. This comes in handy, e.g.
+;;;       when dynamically adding certain parts to the output fragment
+;;;       depending on previously made decisions via a prompt (cf. the
+;;;       org/lilypond-src example).
 ;;; - omit-replacements. A boolean indicating whether to omit the
 ;;;   replacements from the aby-auto-replacements. Default = NIL.
 ;;; 
@@ -287,6 +315,11 @@
 (defun aby-insert (&rest fragment)
   ;;; ****
   (interactive)
+  ;; check if aby-fragments-dir ends with a "/"
+  (unless (string= (substring aby-fragments-dir -1 nil)
+                   "/")
+    ;; add the trailing slash
+    (setf aby-fragments-dir (concat aby-fragments-dir "/")))
   (let* ((fragments (aby-get-instruction-files))
          (fragment (if (car fragment)
                        (car fragment)
@@ -317,50 +350,64 @@
                for varn = (nth 0 rep)
                for regex = (nth 1 rep)
                for replacement = (nth 2 rep)
+               for comment = (nth 3 rep)
                do
                (setf (alist-get varn rep-list) replacement)
-               (setf fragment-data
-                     (replace-regexp-in-string regex
-                                               replacement
-                                               fragment-data)))
-      ;; ask replacements
-      (cl-loop for rep in (alist-get 'ask-rep rep-rules)
-               for varn = (nth 0 rep)
-               for regex = (nth 1 rep)
-               do
-               (let ((replacement (read-string (concat "Replace "
-                                                       regex
-                                                       " with: "))))
-                 (setf (alist-get varn rep-list) replacement)
+               ;; just do something when regex is non-NIL
+               (when regex
                  (setf fragment-data
                        (replace-regexp-in-string regex
                                                  replacement
                                                  fragment-data))))
+      ;; ask replacements
+      (cl-loop for rep in (alist-get 'ask-rep rep-rules)
+               for varn = (nth 0 rep)
+               for regex = (nth 1 rep)
+               for prompt = (nth 2 rep)
+               for comment = (nth 3 rep)
+               do
+               (let* ((prompt (if prompt
+                                  prompt
+                                (concat "Replace " regex " with: ")))
+                      (replacement (read-string prompt)))
+                 (setf (alist-get varn rep-list) replacement)
+                 ;; just do something when regex is non-NIL
+                 (when regex
+                   (setf fragment-data
+                         (replace-regexp-in-string regex
+                                                   replacement
+                                                   fragment-data)))))
       ;; dynamic replacements
       (cl-loop for rep in (alist-get 'dynamic-rep rep-rules)
                for varn = (nth 0 rep)
                for regex = (nth 1 rep)
                for rep-fun = (cadr (nth 2 rep))
+               for comment = (nth 3 rep)
                do
                (let ((replacement
                       ;; call replacement function
                       (funcall rep-fun rep-list)))
                  (setf (alist-get varn rep-list) replacement)
-                 (setf fragment-data
-                       (replace-regexp-in-string regex
-                                                 replacement
-                                                 fragment-data))))
+                 ;; just do something when regex is non-NIL
+                 (when regex
+                   (setf fragment-data
+                         (replace-regexp-in-string regex
+                                                   replacement
+                                                   fragment-data)))))
       ;; auto-replacements
       (cl-loop for rep in aby-auto-replacements
                for varn = (nth 0 rep)
                for regex = (nth 1 rep)
                for replacement = (nth 2 rep)
+               for comment = (nth 3 rep)
                do
                (setf (alist-get varn rep-list) replacement)
-               (setf fragment-data
-                     (replace-regexp-in-string regex
-                                               replacement
-                                               fragment-data)))
+               ;; just do something when regex is non-NIL
+               (when regex
+                 (setf fragment-data
+                       (replace-regexp-in-string regex
+                                                 replacement
+                                                 fragment-data))))
       ;; INSERT REPLACEMENTS
       (insert fragment-data))))
 

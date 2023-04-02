@@ -31,10 +31,11 @@
 <p class="item_name">DESCRIPTION</p>
 <pre> A list of replacements with the default replacement rules.
  Must be of the following form:
- ((var1 placeholder1 replacement1)
-  (var2 placeholder2 replacement2)
+ ((var1 regex1 replacement1 comment1)
+  (var2 regex2 replacement2 comment2)
   ;; ...
-  (varn placeholdern replacementn))
+  (varn regexn replacementn commentn))
+ NB: The comment serves documentation purposes and is optional.
 </pre>
 
 <hr />
@@ -165,28 +166,47 @@
 <p class="item_name">OPTIONAL ARGUMENTS</p>
 <pre> - static-rep. A list of three-item-lists with the static, i.e. "hard coded"
    replacements. The list must take the form:
-   ((var1 placeholder1 value1)
-    (var2 placeholder2 value2)
+   ((var1 regex1 value1 comment1)
+    (var2 regex2 value2 comment2)
     ;; ...
-    (varn placeholdern valuen))
+    (varn regexn valuen commentn))
    The first element must be a symbol which serves as the index for the
    association list which is parsed during the <a href="#robo5">aby-insert</a> prodecure. This
    enables accessing the value via a dynamic-rep.
+   The comment (string) serves documentation purposes and is optional. 
    Default= NIL.
- - ask-rep. A list of two-item-lists with the placeholders to interactively
-   replace. The placeholders will be interactively replaced with values
+ - ask-rep. A list of two-item-lists with the regexs to interactively
+   replace. The regexs will be interactively replaced with values
    given by the user by prompting. The list must take the form:
-   ((var1 placeholder1)
-    (var2 placeholder2)
+   ((var1 regex1 prompt1 comment1)
+    (var2 regex2 prompt2 comment2)
     ;; ...
-    (varn placeholdern))
+    (varn regexn promptn commentn))
+   The prompt must be a string which will be printed in the Minibuffer
+   during the read-string query. If it is NIL, the regex will be displayed.
+   The comment (string) serves documentation purposes and is optional.
    Default = NIL.
  - dynamic-rep. A list of three-item-lists of the form:
-   ((varn placeholdern functionn) ... )
+   ((var1 regex1 function1 comment1)
+    (var2 regex2 function2 comment2)
+    ;; ...
+    (varn regexn functionn commentn))
    The function must be either a lambda or existing function that takes
    the replacements association list as first argument and returns the
-   replacement value as a string. Default = NIL.
- NB: All var items in the *-rep arguments (i.e. the car) must be unique!
+   replacement value as a string.
+   The comment (string) serves documentation purposes and is optional.
+   NB: <a href="#robo5">aby-insert</a> automatically adds the 'aby-fragment-directory to the
+       which is the file-name-directory of the instruction file. This is
+       very useful when loading additional fragment files in the ask-rep
+       lambda function. See examples/org/lilypond-src.el for an example.
+   Default = NIL.
+ NB 1: All var items in the *-rep arguments (i.e. the car) must be unique!
+ NB 2: When the regex is NIL, no replacements will take place. Instead,
+       the value from the list respectively the prompt (in case of ask-rep)
+       will be stored in the replacement list. This comes in handy, e.g.
+       when dynamically adding certain parts to the output fragment
+       depending on previously made decisions via a prompt (cf. the
+       org/lilypond-src example).
  - omit-replacements. A boolean indicating whether to omit the
    replacements from the <a href="#robo0">aby-auto-replacements</a>. Default = NIL.
 </pre>
@@ -229,7 +249,7 @@
 
 </div> <!-- content -->
 <div id="footer">
-<p>Generated from ./src/aby.el with <a href="http://www.xs4all.nl/~rfsber/Robo/robodoc.html">ROBODoc</a> V4.99.44 on 2023-04-02 17:07:12</p>
+<p>Generated from ./src/aby.el with <a href="http://www.xs4all.nl/~rfsber/Robo/robodoc.html">ROBODoc</a> V4.99.44 on 2023-04-02 23:12:45</p>
 </div> <!-- footer -->
 </body>
 </html>

@@ -1,0 +1,15 @@
+
+
+#+name: version-and-paper
+#+begin_src org :exports none
+
+  \\paper{
+    indent=0\\mm
+    tagline = ""
+    oddFooterMarkup=##f
+    oddHeaderMarkup=##f
+    bookTitleMarkup=##f
+    scoreTitleMarkup=##f
+  }
+
+#+end_src
