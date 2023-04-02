@@ -143,7 +143,13 @@
                                                    "$")
                                            "" f)
                  rel-dir))
-            files)))
+            ;; remove emacs backup files
+            ;; RP  Mon Apr  3 01:09:36 2023
+            (mapcar #'(lambda (f)
+                        (if (string= "~" (substring f -1 nil))
+                            ""
+                          f))
+                    files))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; ****f* aby/aby-get-absolute-instruction-file-path
