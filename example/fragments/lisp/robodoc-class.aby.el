@@ -11,19 +11,26 @@
 ;;; CREATED
 ;;; 2023-04-02
 ;;;
-;;; $$ Last modified:  16:35:27 Sun Apr  2 2023 CEST
+;;; $$ Last modified:  23:18:56 Sun Apr  2 2023 CEST
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(let* (;; the file containing the template data
-       ;; relative to this instruction-file
+(let* (;; The file containing the template data
+       ;; relative to this instruction-file.
        (fragment "robodoc-class.lisp")
-       ;; a list with static-replacements (cf. doc)
-       (static-rep '((test1 "{{test}}" "nichts")))
-       ;; a list with ask-replacements
-       (ask-rep '((class-name "{{class-name}}")))
-       ;; a list with dynamic replacements
+       ;; A list with static-replacements (cf. doc).
+       ;; This is just a demonstration and litarally
+       ;; does nothing as there is no occurence in
+       ;; robodoc-class.lisp matching the regex
+       ;; "{{test}}".
+       (static-rep '((test1 "{{test}}" "nothing")))
+       ;; A list with ask-replacements.
+       ;; The third element is the prompt string.
+       ;; For more information cf. the doc for
+       ;; aby-instruct.
+       (ask-rep '((class-name "{{class-name}}" "Class name: ")))
+       ;; A list with dynamic replacements
        ;; the function must take the assoc list with
-       ;; the replacements as first argument (cf. doc)
+       ;; the replacements as first argument. (cf. doc)
        (dynamic-rep
         '((class-short "{{class-name-short}}"
                        '(lambda (reps)
