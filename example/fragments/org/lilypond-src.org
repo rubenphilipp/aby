@@ -1,8 +1,0 @@
-#+begin_src lilypond :file {{outfile}} :output-dir {{outdir}} :exports results
-  <<version-and-paper>>
-  \relative c'
-  {
-  g a b c
-  }
-#+end_src
-{{formatting-snippet}}
