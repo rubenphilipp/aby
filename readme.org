@@ -3,7 +3,7 @@
 #+date: [2023-04-01 Sat]
 #+startup: showall 
 
-Aby[^1] is a simple fragment/snippet manager for [[https://www.gnu.org/software/emacs/][Emacs]]. It lets you easily
+Aby[fn:1] is a simple fragment/snippet manager for [[https://www.gnu.org/software/emacs/][Emacs]]. It lets you easily
 insert the contents of files from a designated snippets directory in an Emacs
 buffer by using the command ~aby-insert~.
 
@@ -54,4 +54,4 @@ parsing/insertion process can be gained by reading the =/doc= (dive in via
 and ~aby/aby-insert~. 
 
 * Footnotes
-[^1]: https://en.wikipedia.org/wiki/Aby_Warburg 
+[fn:1] https://en.wikipedia.org/wiki/Aby_Warburg 
