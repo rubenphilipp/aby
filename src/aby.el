@@ -308,6 +308,9 @@
                           (concat
                            (file-name-directory fragment-i-file-path)
                            (alist-get 'fragment-file rep-rules)))))
+      ;; add file-name-directory to rep-rules list
+      (setf (alist-get 'aby-fragment-directory rep-list)
+            (file-name-directory fragment-i-file-path))
       ;; perform replacements
       ;; static replacements
       (cl-loop for rep in (alist-get 'static-rep rep-rules)
