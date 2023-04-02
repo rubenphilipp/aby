@@ -2,7 +2,7 @@
 
 ;; Copyright (C) 2023  Ruben Philipp
 
-;; Author: Ruben Philipp <rubenphilipp@MBP-von-Ruben.fritz.box>
+;; Author: Ruben Philipp <me@rubenphilipp.com>
 ;; Keywords: 
 
 ;; This program is free software; you can redistribute it and/or modify
