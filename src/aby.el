@@ -395,19 +395,22 @@
                                                    replacement
                                                    fragment-data)))))
       ;; auto-replacements
-      (cl-loop for rep in aby-auto-replacements
-               for varn = (nth 0 rep)
-               for regex = (nth 1 rep)
-               for replacement = (nth 2 rep)
-               for comment = (nth 3 rep)
-               do
-               (setf (alist-get varn rep-list) replacement)
-               ;; just do something when regex is non-NIL
-               (when regex
-                 (setf fragment-data
-                       (replace-regexp-in-string regex
-                                                 replacement
-                                                 fragment-data))))
+      ;; just perform if auto-replacements are desired
+      ;; (see 'omit-replacements in aby-instruct)
+      (unless (alist-get 'omit-replacements rep-rules)
+        (cl-loop for rep in aby-auto-replacements
+                 for varn = (nth 0 rep)
+                 for regex = (nth 1 rep)
+                 for replacement = (nth 2 rep)
+                 for comment = (nth 3 rep)
+                 do
+                 (setf (alist-get varn rep-list) replacement)
+                 ;; just do something when regex is non-NIL
+                 (when regex
+                   (setf fragment-data
+                         (replace-regexp-in-string regex
+                                                   replacement
+                                                   fragment-data)))))
       ;; INSERT REPLACEMENTS
       (insert fragment-data))))
 

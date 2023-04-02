@@ -11,7 +11,7 @@
 ;;; CREATED
 ;;; 2023-04-02
 ;;;
-;;; $$ Last modified:  23:18:56 Sun Apr  2 2023 CEST
+;;; $$ Last modified:  00:26:15 Mon Apr  3 2023 CEST
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (let* (;; The file containing the template data
@@ -45,7 +45,10 @@
   (aby-instruct fragment
                 static-rep
                 ask-rep
-                dynamic-rep))
+                dynamic-rep
+                ;; don't omit auto-replacements
+                ;; (the default is nil)
+                nil))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; EOF
