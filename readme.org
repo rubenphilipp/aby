@@ -1,7 +1,9 @@
 #+title: Aby
 #+author: Ruben Philipp
 #+date: [2023-04-01 Sat]
-#+startup: showall 
+#+startup: showall
+
+[[file:examples/demo.gif]]
 
 Aby[fn:1] is a simple fragment/snippet manager for [[https://www.gnu.org/software/emacs/][Emacs]]. It lets you easily
 insert the contents of files from a designated snippets directory in an Emacs
