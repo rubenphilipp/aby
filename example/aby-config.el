@@ -13,7 +13,17 @@
 ;;; CREATED
 ;;; 2023-04-01
 ;;;
-;;; $$ Last modified:  23:52:20 Sat Apr  1 2023 CEST
+;;; $$ Last modified:  16:31:28 Sun Apr  2 2023 CEST
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-(setq aby-fragments-dir "/Users/rubenphilipp/code/aby/example/fragments")
+(setq aby-fragments-dir "/Users/rubenphilipp/code/aby/example/fragments/")
+
+(setq aby-auto-replacements
+      `((author "{{author}}" ,+rp-document-author+)
+        (author-email "{{author-email}}" ,(concat "<"
+                                   +rp-document-author-mail+
+                                   ">"))
+        (created "{{created}}" ,(format-time-string "%Y-%m-%d"))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; EOF aby-config.el
