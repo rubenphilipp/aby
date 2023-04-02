@@ -21,8 +21,8 @@
 ;;; Commentary:
 
 ;; Aby is a simple fragment/snippet manager for Emacs. It lets you easily
-;; insert the contents of files from a designated snippets directory in an Emacs
-;; buffer.
+;; insert the contents of files from a designated snippets directory into an
+;; Emacs buffer.
 
 ;;; Code:
 
