@@ -54,4 +54,4 @@ parsing/insertion process can be gained by reading the =/doc= (dive in via
 and ~aby/aby-insert~. 
 
 * Footnotes
-[^1] https://en.wikipedia.org/wiki/Aby_Warburg 
+[^1]: https://en.wikipedia.org/wiki/Aby_Warburg 
