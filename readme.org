@@ -3,28 +3,57 @@
 #+date: [2023-04-01 Sat]
 #+startup: showall
 
-$$ Last modified:  23:40:15 Sat Apr  1 2023 CEST
-
 * About
 
 Aby[fn:1] is a simple fragment/snippet manager for [[https://www.gnu.org/software/emacs/][Emacs]]. It lets you easily
 insert the contents of files from a designated snippets directory in an Emacs
-buffer by using the command ~aby-insert~. 
+buffer by using the command ~aby-insert~.
+
+Furthermore, Aby is capable of dynamically altering certain elements in a
+fragment file by using custom defined functions (cf. the documentation for
+=aby/aby-instruct= for more information on building instruction lists).
 
 ** Example
 
 ~M-x aby-insert lisp/robodoc-class~
 
-will search for a file =robodoc-class.el= in the =lisp= sub-directory of the
-current buffer. This file contains further instructions on how to parse
-the source file of the template. The latter is located in the same directory
-as the /instruction file/ and can be a file with any extension.[fn:2]
+will search for a file in the ~aby-fragments-dir~, matching the
+~aby-file-extension~ (default =aby.el=). It will the evaluate the /Elisp/
+expressions in this file in a /temp-buffer/, expecting an association list
+with replacements rules as the return value. Again, the documentation of
+=aby/aby-instruct= shed some light on the data structure.
 
-The code from the /instruction file/ must return a string which will then
-be inserted into the current buffer. 
+The resulting /replacements rules/ will the be parsed by the ~aby-insert~
+function, which performs variable allocations and regex-raplacements, and
+eventually inserts the resulting string in the current buffer.
+
+* Installation
+
+Place the files of this program on your hard-drive and load the files to
+your /Emacs/ configuration, e.g. via:
+
+#+begin_src elisp
+  (load "~/.emacs.d/aby/src/aby.el")
+
+  (require 'aby)
+#+end_src
+
+These expressions could be placed in your ~.emacs~ file.
+
+** Configuration
+
+In order to alter the Aby configuration, you can config variables (cf. the
+variables documentation in the =doc=) after load. An example config-file can
+be found on ~/examples/aby-config.el~.
+
+* Help
+
+The ~/examples~ directory contains examples both for configuration and the
+creation of Aby fragments (i.e. instruction and snippet files).
+Detailed insight on how to construct instruction files and information on the
+parsing/insertion process can be gained by reading the =/doc= (dive in via
+~/doc/index.html~) and especially examining the functions ~aby/aby-instruct~
+and ~aby/aby-insert~. 
 
 * Footnotes
 [fn:1] https://en.wikipedia.org/wiki/Aby_Warburg 
-
-[fn:2] This enables proper syntax highlighting and indentation, which is
-especially valuable when working with code files.
