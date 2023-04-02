@@ -132,13 +132,14 @@
  might be able to do some harm to your Emacs.
 </pre>
 <p class="item_name">ARGUMENTS</p>
-<pre> none, as the function is interactive.
+<pre> A string spedifying the Aby fragment to open from the fragments directory
+ (optional). When NIL, Aby prompts for a file.
 </pre>
 <p class="item_name">RETURN VALUE</p>
 <pre> Either T, if the operation succeeded, or NIL, when something failed.
 </pre>
 <p class="item_name">SYNOPSIS</p>
-<pre class="source">(defun <strong>aby-insert</strong> ()
+<pre class="source">(defun <strong>aby-insert</strong> (&amp;rest fragment)
 </pre>
 
 <hr />
@@ -228,7 +229,7 @@
 
 </div> <!-- content -->
 <div id="footer">
-<p>Generated from ./src/aby.el with <a href="http://www.xs4all.nl/~rfsber/Robo/robodoc.html">ROBODoc</a> V4.99.44 on 2023-04-02 16:37:48</p>
+<p>Generated from ./src/aby.el with <a href="http://www.xs4all.nl/~rfsber/Robo/robodoc.html">ROBODoc</a> V4.99.44 on 2023-04-02 17:07:12</p>
 </div> <!-- footer -->
 </body>
 </html>

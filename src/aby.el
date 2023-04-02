@@ -277,18 +277,21 @@
 ;;; might be able to do some harm to your Emacs.
 ;;;
 ;;; ARGUMENTS
-;;; none, as the function is interactive.
+;;; A string spedifying the Aby fragment to open from the fragments directory
+;;; (optional). When NIL, Aby prompts for a file.
 ;;; 
 ;;; RETURN VALUE
 ;;; Either T, if the operation succeeded, or NIL, when something failed.
 ;;; 
 ;;; SYNOPSIS
-(defun aby-insert ()
+(defun aby-insert (&rest fragment)
   ;;; ****
   (interactive)
   (let* ((fragments (aby-get-instruction-files))
-         (fragment (completing-read "Which fragment should I add? "
-                                    fragments))
+         (fragment (if (car fragment)
+                       (car fragment)
+                     (completing-read "Which fragment should I add? "
+                                      fragments)))
          ;; instruction file
          (fragment-i-file-path
           (aby-get-absolute-instruction-file-path fragment))
