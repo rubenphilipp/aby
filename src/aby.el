@@ -61,51 +61,6 @@
         (buffer-string))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; ****f* aby/aby-replace-from-list-in-string
-;;; AUTHOR
-;;; Ruben Philipp <me@rubenphilipp.com>
-;;;
-;;; CREATED
-;;; 2023-04-01
-;;; 
-;;; DESCRIPTION
-;;; Successively replace contents of a string from an input list of lists
-;;; of the following format:
-;;; ((regex1 replacement1)
-;;;  (regex2 replacement2)
-;;;  ;; ...
-;;;  (regexn replacementn))
-;;;
-;;; ARGUMENTS
-;;; - The input string.
-;;; - The list of replacement values (see above).
-;;; 
-;;; RETURN VALUE
-;;; The resulting string after applying the replacement rules.
-;;;
-;;; EXAMPLE
-
-[
-(aby-replace-from-list-in-string "Hello beautiful world"
-                                 '(("Hello" "Salut,")
-                                   ("[aeiou]" "-")))
-
-;; => "S-l-t, b---t-f-l w-rld"
-]
-
-;;; SYNOPSIS
-(defun aby-replace-from-list-in-string (string replacements)
-  ;;; ****
-  (cl-loop for rep in replacements
-           do
-           (setf string (replace-regexp-in-string (nth 0 rep)
-                                                  (nth 1 rep)
-                                                  string))
-           finally return string))
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; ----------------------------------------------------------------------------
 ;;; CONFIGURATION
 ;;; ----------------------------------------------------------------------------
@@ -152,39 +107,6 @@
 ;;; CORE
 ;;; ----------------------------------------------------------------------------
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; ****f* aby/aby-get-fragment
-;;; AUTHOR
-;;; Ruben Philipp <me@rubenphilipp.com>
-;;;
-;;; CREATED
-;;; 2023-04-02
-;;; 
-;;; DESCRIPTION
-;;; Loads a fragment source file to a string. NB: The base directory
-;;; relates to the base directory of the fragment dir!
-;;;
-;;; ARGUMENTS
-;;; The file path, relative to the aby-fragments-dir.
-;;; 
-;;; RETURN VALUE
-;;; A string containing the content of the fragment file.
-;;;
-;;; EXAMPLE
-
-[
- 
- (aby-fragment "robodoc-function.lisp")
- 
-]
-
-;;; SYNOPSIS
-(defun aby-get-fragment (file)
-  ;;; ****
-  (let ((fragment-file (concat aby-fragments-dir
-                               file)))
-    (file-to-string fragment-file)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -239,84 +161,6 @@
                     filename
                     "."
                     aby-file-extension))
-
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; ****f* aby/aby-add-replacement-ask
-;;; AUTHOR
-;;; Ruben Philipp <me@rubenphilipp.com>
-;;;
-;;; CREATED
-;;; 2023-04-02
-;;; 
-;;; DESCRIPTION
-;;; This function asks for a value to be replaced in the fragment.
-;;;
-;;; ARGUMENTS
-;;; The placeholder to be replaced (obviously).
-;;; 
-;;; RETURN VALUE
-;;; A replacement tuple to be added to a replacement list.
-;;; Format:
-;;; (placeholder replacement)
-;;;
-;;; SYNOPSIS
-(defun aby-add-replacement-ask (placeholder bla)
-  ;;; ****
-  (let (replacement (read-string (concat "Replace "
-                                         placeholder
-                                         " with: ")))
-    (list placeholder replacement)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; ****f* aby/aby-add-replacement
-;;; AUTHOR
-;;; Ruben Philipp <me@rubenphilipp.com>
-;;;
-;;; CREATED
-;;; 2023-04-02
-;;; 
-;;; DESCRIPTION
-;;; Adds a replacement tuple to the replacement list.
-;;;
-;;; ARGUMENTS
-;;; - The placeholder to be overridden by the following value.
-;;; - The value that replaces the placeholder.
-;;; 
-;;; RETURN VALUE
-;;; A replacement tuple to be added to a replacement list.
-;;; For more detail, cf. aby-replacement-ask.
-;;; SYNOPSIS
-(defun aby-add-replacement (placeholder value)
-  ;;; ****
-  (list placeholder value))
-
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;; ****f* aby/aby-perform-replacements
-;;; AUTHOR
-;;; Ruben Philipp <me@rubenphilipp.com>
-;;;
-;;; CREATED
-;;; 2023-04-02
-;;; 
-;;; DESCRIPTION
-;;; This is a shortcut for aby-replace-from-list-in-string.
-;;;
-;;; ARGUMENTS
-;;; - The input string.
-;;; - The list of replacement values.
-;;; 
-;;; RETURN VALUE
-;;; The resulting string after applying the replacement rules.
-;;; 
-;;; SYNOPSIS
-(defun aby-perform-replacements (fragment-string replacement-list)
-  ;; perform auto-replacements when desired
-  (let ((replacements (append auto-replacements
-                              replacement-list)))
-    (aby-replace-from-list-in-string fragment-string replacements)))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

@@ -24,60 +24,8 @@
 </div> <!-- navigation -->
 <div id="content">
 <hr />
-<a name="aby2faby2dadd2dreplacement"></a>
-<a name="robo0"></a><h2>aby/aby-add-replacement [ Functions ]</h2>
-
-<p>[ <a href="#robo_top_of_doc">Top</a> ] [ <a href="./robo_functions.html#robo_top_of_doc">Functions</a> ]</p>
-<p class="item_name">AUTHOR</p>
-<pre> Ruben Philipp &lt;me@rubenphilipp.com&gt;
-</pre>
-<p class="item_name">CREATED</p>
-<pre> 2023-04-02
-</pre>
-<p class="item_name">DESCRIPTION</p>
-<pre> Adds a replacement tuple to the replacement list.
-</pre>
-<p class="item_name">ARGUMENTS</p>
-<pre> - The placeholder to be overridden by the following value.
- - The value that replaces the placeholder.
-</pre>
-<p class="item_name">RETURN VALUE</p>
-<pre> A replacement tuple to be added to a replacement list.
- For more detail, cf. aby-replacement-ask.
-</pre>
-<p class="item_name">SYNOPSIS</p>
-<pre class="source">(defun <strong>aby-add-replacement</strong> (placeholder value)
-</pre>
-
-<hr />
-<a name="aby2faby2dadd2dreplacement2dask"></a>
-<a name="robo1"></a><h2>aby/aby-add-replacement-ask [ Functions ]</h2>
-
-<p>[ <a href="#robo_top_of_doc">Top</a> ] [ <a href="./robo_functions.html#robo_top_of_doc">Functions</a> ]</p>
-<p class="item_name">AUTHOR</p>
-<pre> Ruben Philipp &lt;me@rubenphilipp.com&gt;
-</pre>
-<p class="item_name">CREATED</p>
-<pre> 2023-04-02
-</pre>
-<p class="item_name">DESCRIPTION</p>
-<pre> This function asks for a value to be replaced in the fragment.
-</pre>
-<p class="item_name">ARGUMENTS</p>
-<pre> The placeholder to be replaced (obviously).
-</pre>
-<p class="item_name">RETURN VALUE</p>
-<pre> A replacement tuple to be added to a replacement list.
- Format:
- (placeholder replacement)
-</pre>
-<p class="item_name">SYNOPSIS</p>
-<pre class="source">(defun <strong>aby-add-replacement-ask</strong> (placeholder bla)
-</pre>
-
-<hr />
 <a name="aby2faby2dauto2dreplacements"></a>
-<a name="robo2"></a><h2>aby/aby-auto-replacements [ Variables ]</h2>
+<a name="robo0"></a><h2>aby/aby-auto-replacements [ Variables ]</h2>
 
 <p>[ <a href="#robo_top_of_doc">Top</a> ] [ <a href="./robo_variables.html#robo_top_of_doc">Variables</a> ]</p>
 <p class="item_name">DESCRIPTION</p>
@@ -91,7 +39,7 @@
 
 <hr />
 <a name="aby2faby2dfile2dextension"></a>
-<a name="robo3"></a><h2>aby/aby-file-extension [ Variables ]</h2>
+<a name="robo1"></a><h2>aby/aby-file-extension [ Variables ]</h2>
 
 <p>[ <a href="#robo_top_of_doc">Top</a> ] [ <a href="./robo_variables.html#robo_top_of_doc">Variables</a> ]</p>
 <p class="item_name">DESCRIPTION</p>
@@ -100,7 +48,7 @@
 
 <hr />
 <a name="aby2faby2dfragments2ddir"></a>
-<a name="robo4"></a><h2>aby/aby-fragments-dir [ Variables ]</h2>
+<a name="robo2"></a><h2>aby/aby-fragments-dir [ Variables ]</h2>
 
 <p>[ <a href="#robo_top_of_doc">Top</a> ] [ <a href="./robo_variables.html#robo_top_of_doc">Variables</a> ]</p>
 <p class="item_name">DESCRIPTION</p>
@@ -110,7 +58,7 @@
 
 <hr />
 <a name="aby2faby2dget2dabsolute2dinstruction2dfile2dpath"></a>
-<a name="robo5"></a><h2>aby/aby-get-absolute-instruction-file-path [ Functions ]</h2>
+<a name="robo3"></a><h2>aby/aby-get-absolute-instruction-file-path [ Functions ]</h2>
 
 <p>[ <a href="#robo_top_of_doc">Top</a> ] [ <a href="./robo_functions.html#robo_top_of_doc">Functions</a> ]</p>
 <p class="item_name">AUTHOR</p>
@@ -121,7 +69,7 @@
 </pre>
 <p class="item_name">DESCRIPTION</p>
 <pre> Return the full file path of single Aby instruction file, e.g. retreived via
- <a href="#robo7">aby-get-instruction-files</a>.
+ <a href="#robo4">aby-get-instruction-files</a>.
 </pre>
 <p class="item_name">ARGUMENTS</p>
 <pre> The relative path to an Aby instruction-file.
@@ -134,36 +82,8 @@
 </pre>
 
 <hr />
-<a name="aby2faby2dget2dfragment"></a>
-<a name="robo6"></a><h2>aby/aby-get-fragment [ Functions ]</h2>
-
-<p>[ <a href="#robo_top_of_doc">Top</a> ] [ <a href="./robo_functions.html#robo_top_of_doc">Functions</a> ]</p>
-<p class="item_name">AUTHOR</p>
-<pre> Ruben Philipp &lt;me@rubenphilipp.com&gt;
-</pre>
-<p class="item_name">CREATED</p>
-<pre> 2023-04-02
-</pre>
-<p class="item_name">DESCRIPTION</p>
-<pre> Loads a fragment source file to a string. NB: The base directory
- relates to the base directory of the fragment dir!
-</pre>
-<p class="item_name">ARGUMENTS</p>
-<pre> The file path, relative to the <a href="#robo4">aby-fragments-dir</a>.
-</pre>
-<p class="item_name">RETURN VALUE</p>
-<pre> A string containing the content of the fragment file.
-</pre>
-<p class="item_name">EXAMPLE</p>
-<pre class="source"> (aby-fragment "robodoc-function.lisp")
-</pre>
-<p class="item_name">SYNOPSIS</p>
-<pre class="source">(defun <strong>aby-get-fragment</strong> (file)
-</pre>
-
-<hr />
 <a name="aby2faby2dget2dinstruction2dfiles"></a>
-<a name="robo7"></a><h2>aby/aby-get-instruction-files [ Functions ]</h2>
+<a name="robo4"></a><h2>aby/aby-get-instruction-files [ Functions ]</h2>
 
 <p>[ <a href="#robo_top_of_doc">Top</a> ] [ <a href="./robo_functions.html#robo_top_of_doc">Functions</a> ]</p>
 <p class="item_name">AUTHOR</p>
@@ -186,7 +106,7 @@
 
 <hr />
 <a name="aby2faby2dinsert"></a>
-<a name="robo8"></a><h2>aby/aby-insert [ Functions ]</h2>
+<a name="robo5"></a><h2>aby/aby-insert [ Functions ]</h2>
 
 <p>[ <a href="#robo_top_of_doc">Top</a> ] [ <a href="./robo_functions.html#robo_top_of_doc">Functions</a> ]</p>
 <p class="item_name">AUTHOR</p>
@@ -223,7 +143,7 @@
 
 <hr />
 <a name="aby2faby2dinstruct"></a>
-<a name="robo9"></a><h2>aby/aby-instruct [ Functions ]</h2>
+<a name="robo6"></a><h2>aby/aby-instruct [ Functions ]</h2>
 
 <p>[ <a href="#robo_top_of_doc">Top</a> ] [ <a href="./robo_functions.html#robo_top_of_doc">Functions</a> ]</p>
 <p class="item_name">AUTHOR</p>
@@ -235,7 +155,7 @@
 <p class="item_name">DESCRIPTION</p>
 <pre> This function is the main functino to be used in Aby instruction files.
  It takes the replacements and instructions for preparing the fragments
- in the <a href="#robo8">aby-insert</a> function. These are mainly replacement rules (either
+ in the <a href="#robo5">aby-insert</a> function. These are mainly replacement rules (either
  interactively, by prompting for completions or static values). 
 </pre>
 <p class="item_name">ARGUMENTS</p>
@@ -249,7 +169,7 @@
     ;; ...
     (varn placeholdern valuen))
    The first element must be a symbol which serves as the index for the
-   association list which is parsed during the <a href="#robo8">aby-insert</a> prodecure. This
+   association list which is parsed during the <a href="#robo5">aby-insert</a> prodecure. This
    enables accessing the value via a dynamic-rep.
    Default= NIL.
  - ask-rep. A list of two-item-lists with the placeholders to interactively
@@ -267,7 +187,7 @@
    replacement value as a string. Default = NIL.
  NB: All var items in the *-rep arguments (i.e. the car) must be unique!
  - omit-replacements. A boolean indicating whether to omit the
-   replacements from the <a href="#robo2">aby-auto-replacements</a>. Default = NIL.
+   replacements from the <a href="#robo0">aby-auto-replacements</a>. Default = NIL.
 </pre>
 <p class="item_name">RETURN VALUE</p>
 <pre> An association list with the replacements rules.
@@ -282,45 +202,8 @@
 </pre>
 
 <hr />
-<a name="aby2faby2dreplace2dfrom2dlist2din2dstring"></a>
-<a name="robo10"></a><h2>aby/aby-replace-from-list-in-string [ Functions ]</h2>
-
-<p>[ <a href="#robo_top_of_doc">Top</a> ] [ <a href="./robo_functions.html#robo_top_of_doc">Functions</a> ]</p>
-<p class="item_name">AUTHOR</p>
-<pre> Ruben Philipp &lt;me@rubenphilipp.com&gt;
-</pre>
-<p class="item_name">CREATED</p>
-<pre> 2023-04-01
-</pre>
-<p class="item_name">DESCRIPTION</p>
-<pre> Successively replace contents of a string from an input list of lists
- of the following format:
- ((regex1 replacement1)
-  (regex2 replacement2)
-  ;; ...
-  (regexn replacementn))
-</pre>
-<p class="item_name">ARGUMENTS</p>
-<pre> - The input string.
- - The list of replacement values (see above).
-</pre>
-<p class="item_name">RETURN VALUE</p>
-<pre> The resulting string after applying the replacement rules.
-</pre>
-<p class="item_name">EXAMPLE</p>
-<pre class="source">(<strong>aby-replace-from-list-in-string</strong> "Hello beautiful world"
-                                 '(("Hello" "Salut,")
-                                   ("[aeiou]" "-")))
-
-;; =&gt; "S-l-t, b---t-f-l w-rld"
-</pre>
-<p class="item_name">SYNOPSIS</p>
-<pre class="source">(defun <strong>aby-replace-from-list-in-string</strong> (string replacements)
-</pre>
-
-<hr />
 <a name="aby2feval2dfile"></a>
-<a name="robo11"></a><h2>aby/eval-file [ Functions ]</h2>
+<a name="robo7"></a><h2>aby/eval-file [ Functions ]</h2>
 
 <p>[ <a href="#robo_top_of_doc">Top</a> ] [ <a href="./robo_functions.html#robo_top_of_doc">Functions</a> ]</p>
 <p class="item_name">AUTHOR</p>
@@ -345,7 +228,7 @@
 
 </div> <!-- content -->
 <div id="footer">
-<p>Generated from ./src/aby.el with <a href="http://www.xs4all.nl/~rfsber/Robo/robodoc.html">ROBODoc</a> V4.99.44 on 2023-04-02 16:35:34</p>
+<p>Generated from ./src/aby.el with <a href="http://www.xs4all.nl/~rfsber/Robo/robodoc.html">ROBODoc</a> V4.99.44 on 2023-04-02 16:37:48</p>
 </div> <!-- footer -->
 </body>
 </html>
