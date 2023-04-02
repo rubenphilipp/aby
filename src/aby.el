@@ -294,6 +294,9 @@
           (aby-get-absolute-instruction-file-path fragment))
          (fragment-i-file fragment-i-file-path)
          (rep-rules (aby-eval-file fragment-i-file)))
+    ;; test if fragment file is non-nil
+    (when (string= "" fragment)
+      (error "Please choose a fragment."))
     ;; test if return value is an aby-list
     (unless (eql (alist-get 'type rep-rules) 'aby-rep-rules)
       (error "aby-insert: The returned list is not of type 'aby-rep-rules."))
