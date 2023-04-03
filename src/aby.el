@@ -95,7 +95,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; ****v* aby/aby-file-extension
 ;;; DESCRIPTION
-;;; The default extension for Aby instruction files. Default: "el". 
+;;; The default extension for Aby instruction files. Default: "aby.el". 
 ;;; ****
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defcustom aby-file-extension "aby.el"
