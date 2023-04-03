@@ -13,17 +13,15 @@
 ;;; CREATED
 ;;; 2023-04-01
 ;;;
-;;; $$ Last modified:  17:00:10 Sun Apr  2 2023 CEST
+;;; $$ Last modified:  09:32:03 Mon Apr  3 2023 CEST
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;; must end with a slash!!
-(setq aby-fragments-dir "/Users/rubenphilipp/code/aby/example/fragments/")
+(setq aby-fragments-dir "/Users/mnemosyne/code/aby/example/fragments/")
 
 (setq aby-auto-replacements
-      `((author "{{author}}" ,+rp-document-author+)
-        (author-email "{{author-email}}" ,(concat "<"
-                                   +rp-document-author-mail+
-                                   ">"))
+      `((author "{{author}}" "Mnemosyne")
+        (author-email "{{author-email}}" "mnemosyne@nil.org"
         (created "{{created}}" ,(format-time-string "%Y-%m-%d"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

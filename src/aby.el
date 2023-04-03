@@ -70,7 +70,6 @@
 ;;; ****v* aby/aby-fragments-dir 
 ;;; DESCRIPTION
 ;;; The source directory of the Aby fragments.
-;;; NB: The path needs to end with a trailing slash!
 ;;; ****
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defcustom aby-fragments-dir "~/fragments/"
@@ -187,7 +186,8 @@
 ;;; 2023-04-02
 ;;; 
 ;;; DESCRIPTION
-;;; This function is the main functino to be used in Aby instruction files.
+;;; This function is is used in Aby instruction files to generate the
+;;; replacements list which will then be parsed by aby-insert (see below).
 ;;; It takes the replacements and instructions for preparing the fragments
 ;;; in the aby-insert function. These are mainly replacement rules (either
 ;;; interactively, by prompting for completions or static values). 
