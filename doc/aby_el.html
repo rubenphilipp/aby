@@ -195,10 +195,18 @@
    the replacements association list as first argument and returns the
    replacement value as a string.
    The comment (string) serves documentation purposes and is optional.
-   NB: <a href="#robo5">aby-insert</a> automatically adds the 'aby-fragment-directory to the
-       which is the file-name-directory of the instruction file. This is
-       very useful when loading additional fragment files in the ask-rep
-       lambda function. See examples/org/lilypond-src.el for an example.
+   NB: <a href="#robo5">aby-insert</a> automatically adds some elements to the replacements
+       association list. These are relevant values which are not directly
+       available during the execution of the code in the instruction file
+       and are thus passed to the the dynamic-replacement function via the
+       replacement list. The following keys will be set:
+       - 'aby-fragment-directory. This is the file-name-directory of the
+         instruction file. This is very useful when loading additional
+         fragment files in the ask-rep lambda function.
+         See examples/org/lilypond-src.el for an example.
+       - 'buffer-file-name. This is the (buffer-file-name) of the buffer
+         visited during insert (i.e. the buffer, the resulting string will
+         be pasted in). 
    Default = NIL.
  NB 1: All var items in the *-rep arguments (i.e. the car) must be unique!
  NB 2: When the regex is NIL, no replacements will take place. Instead,
@@ -249,7 +257,7 @@
 
 </div> <!-- content -->
 <div id="footer">
-<p>Generated from ./src/aby.el with <a href="http://www.xs4all.nl/~rfsber/Robo/robodoc.html">ROBODoc</a> V4.99.44 on 2023-04-03 13:41:17</p>
+<p>Generated from ./src/aby.el with <a href="http://www.xs4all.nl/~rfsber/Robo/robodoc.html">ROBODoc</a> V4.99.44 on 2023-04-09 18:26:26</p>
 </div> <!-- footer -->
 </body>
 </html>

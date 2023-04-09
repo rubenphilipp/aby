@@ -227,10 +227,18 @@
 ;;;   the replacements association list as first argument and returns the
 ;;;   replacement value as a string.
 ;;;   The comment (string) serves documentation purposes and is optional.
-;;;   NB: aby-insert automatically adds the 'aby-fragment-directory to the
-;;;       which is the file-name-directory of the instruction file. This is
-;;;       very useful when loading additional fragment files in the ask-rep
-;;;       lambda function. See examples/org/lilypond-src.el for an example.
+;;;   NB: aby-insert automatically adds some elements to the replacements
+;;;       association list. These are relevant values which are not directly
+;;;       available during the execution of the code in the instruction file
+;;;       and are thus passed to the the dynamic-replacement function via the
+;;;       replacement list. The following keys will be set:
+;;;       - 'aby-fragment-directory. This is the file-name-directory of the
+;;;         instruction file. This is very useful when loading additional
+;;;         fragment files in the ask-rep lambda function.
+;;;         See examples/org/lilypond-src.el for an example.
+;;;       - 'buffer-file-name. This is the (buffer-file-name) of the buffer
+;;;         visited during insert (i.e. the buffer, the resulting string will
+;;;         be pasted in). 
 ;;;   Default = NIL.
 ;;; NB 1: All var items in the *-rep arguments (i.e. the car) must be unique!
 ;;; NB 2: When the regex is NIL, no replacements will take place. Instead,
@@ -350,6 +358,10 @@
       ;; add file-name-directory to rep-rules list
       (setf (alist-get 'aby-fragment-directory rep-list)
             (file-name-directory fragment-i-file-path))
+      ;; add the buffer-file-name to rep-rules list
+      ;; RP  Sun Apr  9 18:09:09 2023
+      (setf (alist-get 'buffer-file-name rep-list)
+            (buffer-file-name))
       ;; perform replacements
       ;; static replacements
       (cl-loop for rep in (alist-get 'static-rep rep-rules)
@@ -419,6 +431,7 @@
                                                    fragment-data)))))
       ;; INSERT REPLACEMENTS
       (insert fragment-data))))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
