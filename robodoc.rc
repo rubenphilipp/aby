@@ -82,18 +82,28 @@ accept files:
 header markers:
     ****
     ;;; ****
-    ; ****
+    ;; ****
 remark markers:
     ;;;
     #|
     |#
     [
     ]
+remark begin markers:
+    #|
+remark end markers:
+    |#
 end markers:
     ;;; ****
+    ;; ****
 source line comments:
     ; 
     ;; 
     ;;;
     #|
     [
+keywords:
+    if
+    loop
+    defun
+    defmethod
