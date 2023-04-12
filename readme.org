@@ -42,9 +42,9 @@ These expressions could be placed in your ~.emacs~ file.
 
 ** Configuration
 
-In order to alter the Aby configuration, you can config variables (cf. the
-variables documentation in the =doc=) after load. An example config-file can
-be found on ~/examples/aby-config.el~.
+In order to alter the Aby configuration, you can edit the config variables
+(cf. the variables documentation in the =doc=) after load. An example
+config-file can be found on ~/examples/aby-config.el~.
 
 * Help
 
