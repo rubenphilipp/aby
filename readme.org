@@ -46,6 +46,14 @@ In order to alter the Aby configuration, you can alter the config variables
 (cf. the variables documentation in the =doc=) after load. An example
 config-file can be found on ~/examples/aby-config.el~.
 
+* Usage
+
+As exemplified in the previous example, an /Aby/ snippet is inserted via the
+~aby-insert~ command.
+The ~examples~ directory contains a (somewhat recursive) file for creating /Aby/
+~instruction-files~ (cf. ~examples/fragments/aby/aby-instruct.aby.el~). This one
+comes in very handy when creating new /aby-instruct/ files (cf. doc). 
+
 * Help
 
 The ~/examples~ directory contains examples both for configuration and the

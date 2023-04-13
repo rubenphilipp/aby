@@ -11,7 +11,7 @@
 ;;; CREATED
 ;;; {{created}}
 ;;;
-;;; $$ Last modified:  00:00:06 Fri Apr 14 2023 CEST
+;;; $$ Last modified: 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (let* ((fragment "{{fragment-file}}")
