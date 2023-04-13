@@ -186,7 +186,7 @@
 ;;; 2023-04-02
 ;;; 
 ;;; DESCRIPTION
-;;; This function is is used in Aby instruction files to generate the
+;;; This function is used in Aby instruction files to generate the
 ;;; replacements list which will then be parsed by aby-insert.
 ;;; It takes the replacements and instructions for preparing the fragments
 ;;; in the aby-insert function. These are mainly replacement rules (either
