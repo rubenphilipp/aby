@@ -6,7 +6,7 @@
 [[file:examples/demo.gif]]
 
 Aby[fn:1] is a simple fragment/snippet manager for [[https://www.gnu.org/software/emacs/][Emacs]]. It lets you easily
-insert the contents of files from a designated snippets directory in an Emacs
+insert the contents of files from a designated snippets directory into an Emacs
 buffer by using the command ~aby-insert~.
 
 Furthermore, Aby is capable of dynamically altering certain elements in a
@@ -18,14 +18,14 @@ fragment file by using custom defined functions (cf. the documentation for
 ~M-x aby-insert lisp/robodoc-class~
 
 will search for a file in the ~aby-fragments-dir~, matching the
-~aby-file-extension~ (default =aby.el=). It will the evaluate the /Elisp/
+~aby-file-extension~ (default =aby.el=). It will evaluate the /Elisp/
 expressions in this file in a /temp-buffer/, expecting an association list
 with replacements rules as the return value. Again, the documentation of
 =aby/aby-instruct= shed some light on the data structure.
 
 The resulting /replacements rules/ will the be parsed by the ~aby-insert~
-function, which performs variable allocations and regex-raplacements, and
-eventually inserts the resulting string in the current buffer.
+function, which performs variable allocations and regex-replacements, and
+eventually inserts the resulting string into the current buffer.
 
 * Installation
 
@@ -42,7 +42,7 @@ These expressions could be placed in your ~.emacs~ file.
 
 ** Configuration
 
-In order to alter the Aby configuration, you can alter the config variables
+In order to alter the Aby configuration, you can modify the config variables
 (cf. the variables documentation in the =doc=) after load. An example
 config-file can be found on ~/examples/aby-config.el~.
 
@@ -50,9 +50,9 @@ config-file can be found on ~/examples/aby-config.el~.
 
 As exemplified in the previous example, an /Aby/ snippet is inserted via the
 ~aby-insert~ command.
-The ~examples~ directory contains a (somewhat recursive) file for creating /Aby/
-~instruction-files~ (cf. ~examples/fragments/aby/aby-instruct.aby.el~). This one
-comes in very handy when creating new /aby-instruct/ files (cf. doc). 
+The ~examples~ directory contains a (somewhat "recursive") file for creating
+/Aby/ ~instruction-files~ (cf. ~examples/fragments/aby/aby-instruct.aby.el~).
+This one comes in very handy when creating new /aby-instruct/ files (cf. doc). 
 
 * Help
 
