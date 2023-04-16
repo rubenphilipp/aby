@@ -19,11 +19,11 @@
                      ;; (var-n regex-n value-n comment-n)
                      ))
        (ask-rep '(
-                  ;; (var-n regex-n value-n comment-n)
+                  ;; (var-n regex-n prompt-n comment-n)
                   ))
        (dynamic-rep '(
-                      ;; (var-n regex-n prompt-n comment-n)
-                      ))
+                      ;; (var-n regex-n function-n comment-n)
+                      )))
   (aby-instruct fragment
                 static-rep
                 ask-rep
