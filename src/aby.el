@@ -61,6 +61,32 @@
         (buffer-string))))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; ****f* aby/aby-file-to-string
+;;; AUTHOR
+;;; Ruben Philipp <me@rubenphilipp.com>
+;;;
+;;; CREATED
+;;; 2023-04-18, Essen Werden
+;;; 
+;;; DESCRIPTION
+;;; Helper function which reads the contents of a file into a string.
+;;;
+;;; ARGUMENTS
+;;; The path to the file.
+;;; 
+;;; RETURN VALUE
+;;; The contents of the file as a string.
+;;; 
+;;; SYNOPSIS
+(defun aby-file-to-string (file)
+  ;;; ****
+  (with-temp-buffer
+    (insert-file-contents file)
+    (buffer-string)))
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; ----------------------------------------------------------------------------
 ;;; CONFIGURATION
 ;;; ----------------------------------------------------------------------------
@@ -351,7 +377,7 @@
     (unless (eql (alist-get 'type rep-rules) 'aby-rep-rules)
       (error "aby-insert: The returned list is not of type 'aby-rep-rules."))
     (let ((rep-list '())
-          (fragment-data (file-to-string
+          (fragment-data (aby-file-to-string
                           (concat
                            (file-name-directory fragment-i-file-path)
                            (alist-get 'fragment-file rep-rules)))))
