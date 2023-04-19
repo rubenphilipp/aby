@@ -163,6 +163,10 @@
                  ;; dot
                  ;; RP  Sun Apr  2 22:58:57 2023
                  ;;(file-name-sans-extension f)
+                 ;;; TODO:
+                 ;;; - could be improved by adding a "$" to the
+                 ;;;   regex
+                 ;;;   RP  Wed Apr 19 22:56:29 2023
                  (replace-regexp-in-string (concat "."
                                                    aby-file-extension
                                                    "$")
