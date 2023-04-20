@@ -27,6 +27,43 @@ The resulting /replacements rules/ will the be parsed by the ~aby-insert~
 function, which performs variable allocations and regex-replacements, and
 eventually inserts the resulting string into the current buffer.
 
+*** abyss -- Plain Fragments
+
+Besides the fully fledged, gold standard way of inserting Aby snippets -- as
+described above --, it is also possible to omit the process of calling (or
+creating) an /instruction-file/ prior to inserting the snippet. For cases
+that don't require explicit replacements instructions (as given in a
+/replacement-file/ via the /replacement-rules/), it is possible to skip the
+creation of an /instruction-file/ and just create a /fragment-file/ which is
+immediately inserted into the buffer. The only replacements which will be made
+are those prescribed via the /auto-replacements/ (cf. doc for
+~aby/aby-auto-replacements~).
+
+In order to create fragments/snippets, which will be inserted via this method,
+add files to the fragment directory with a specific addition to the suffix,
+indicating that this file is to be parsed as a /plain-fragment/ during the
+~aby-insert~ process. The default suffix-indicator is
+#+begin_src
+  ".abyss\\.?+\\..+$"
+#+end_src
+
+which is a Elisp RegEx, indicating that all files which end with an arbitrary
+extension plus a trailing suffix (~.abyss~) should be considered as Plain
+Fragments.[fn:2] Thus, the files ~simple-html.abyss.html~ and
+~function.abyss.lisp~ will be interpreted as Plain Fragment files:
+
+#+begin_src
+  class.lisp
+  function.aby.el
+  function.lisp
+  function.abyss.lisp
+  method.aby.el
+  simple-html.abyss.html
+  method.lisp
+  module.aby.el
+#+end_src
+
+
 * Installation
 
 Place the files of this program on your hard-drive and load the files to
@@ -64,4 +101,7 @@ parsing/insertion process can be gained by reading the =/doc= (dive in via
 and ~aby/aby-insert~. 
 
 * Footnotes
+
 [fn:1] https://en.wikipedia.org/wiki/Aby_Warburg 
+[fn:2] For more on Elisp RegEx (Regular Expressions), cf. the [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Regular-Expressions.html][Emacs manual]] and
+the [[https://www.emacswiki.org/emacs/RegularExpression][EmacsWiki]].

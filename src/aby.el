@@ -95,7 +95,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; ****v* aby/aby-fragments-dir 
 ;;; DESCRIPTION
-;;; The source directory of the Aby fragments.
+;;; The source directory of the Aby fragments. Must be a string.
+;;;
+;;; DEFAULT
+;;; "~/fragments/"
 ;;; ****
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defcustom aby-fragments-dir "~/fragments/"
@@ -111,6 +114,9 @@
 ;;;  ;; ...
 ;;;  (varn regexn replacementn commentn))
 ;;; NB: The comment serves documentation purposes and is optional.
+;;;
+;;; DEFAULT
+;;; nil
 ;;; ****
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defcustom aby-auto-replacements nil
@@ -121,11 +127,31 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; ****v* aby/aby-file-extension
 ;;; DESCRIPTION
-;;; The default extension for Aby instruction files. Default: "aby.el". 
+;;; The default extension for Aby instruction files. Must be a string.
+;;;
+;;; DEFAULT
+;;; "aby.el"
 ;;; ****
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defcustom aby-file-extension "aby.el"
   "The default extension for Aby instruction files.")
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; ****v* aby/aby-plain-fragment-indicator
+;;; DESCRIPTION
+;;; This is an Elisp RegExp indicating the files which should be interpreted
+;;; as plains-fragments. These files will be inserted by aby-insert without
+;;; evaluating an instruction-file. The only replacements which will take place
+;;; are those defined via aby-auto-replacements.
+;;; Must be of type string.
+;;;
+;;; DEFAULT
+;;; ".abyss\\.?+\\..+$"
+;;; ****
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defcustom aby-plain-fragment-indicator ".abyss\\.?+\\..+$"
+  "The default RegEx for Aby plain-fragments.")
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -145,7 +171,7 @@
 ;;; 
 ;;; DESCRIPTION
 ;;; This function reads the contents of the fragment directory and returns
-;;; a list of the relative filenames.
+;;; a list of the relative filenames of the Aby instruction-files.
 ;;; This is, obviously, necessary for auto-completion. 
 ;;; 
 ;;; RETURN VALUE
@@ -155,7 +181,12 @@
 (defun aby-get-instruction-files ()
   ;;; ****
   (let ((files (directory-files-recursively aby-fragments-dir
-                                            aby-file-extension))
+                                            ;;; added "$" to exclude
+                                            ;;; files located anywhere
+                                            ;;; on the hard drive
+                                            ;;; RP  Thu Apr 20 00:13:14 2023
+                                            (concat aby-file-extension
+                                                    "$")))
         (rel-dir (expand-file-name aby-fragments-dir)))
     (mapcar #'(lambda (f)
                 (file-relative-name
@@ -167,7 +198,7 @@
                  ;;; - could be improved by adding a "$" to the
                  ;;;   regex
                  ;;;   RP  Wed Apr 19 22:56:29 2023
-                 (replace-regexp-in-string (concat "."
+                 (replace-regexp-in-string (concat "\\."
                                                    aby-file-extension
                                                    "$")
                                            "" f)
@@ -179,6 +210,100 @@
                             ""
                           f))
                     files))))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; ****f* aby/aby-get-plain-fragment-files
+;;; AUTHOR
+;;; Ruben Philipp <me@rubenphilipp.com>
+;;;
+;;; CREATED
+;;; 2023-04-19
+;;; 
+;;; DESCRIPTION
+;;; This function reads the contents of the fragment directory and returns
+;;; a list of the relative filenames of the plain-fragment files (cf. readme).
+;;; 
+;;; RETURN VALUE
+;;; A list with the relative filename paths (without file extension) of the
+;;; plain-fragment files.
+;;;
+;;; SYNOPSIS
+(defun aby-get-plain-fragment-files ()
+  ;;; ****
+  (let ((files (directory-files-recursively aby-fragments-dir
+                                            ;; note this!
+                                            aby-plain-fragment-indicator))
+        (rel-dir (expand-file-name aby-fragments-dir)))
+    (mapcar #'(lambda (f)
+                (file-relative-name
+                 ;; removed as file-names can contain more than one
+                 ;; dot
+                 ;; RP  Sun Apr  2 22:58:57 2023
+                 ;;(file-name-sans-extension f)
+                 ;;; TODO:
+                 ;;; - could be improved by adding a "$" to the
+                 ;;;   regex
+                 ;;;   RP  Wed Apr 19 22:56:29 2023
+                 f
+                 rel-dir))
+            files)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; ****f* aby/aby-is-instruction-file
+;;; AUTHOR
+;;; Ruben Philipp <me@rubenphilipp.com>
+;;;
+;;; CREATED
+;;; 2023-04-19
+;;; 
+;;; DESCRIPTION
+;;; This function tests if a given file matches the criteria for an
+;;; instruction-file (as defined via aby-file-extension).
+;;;
+;;; ARGUMENTS
+;;; The absolute file path to the fragment file (e.g. via
+;;; aby-get-absolute-instruction-file-path). Must be a string.
+;;; 
+;;; RETURN VALUE
+;;; Either T, when the given file is assumed to be an instruction-file, or
+;;; NIL.
+;;;
+;;; SYNOPSIS
+(defun aby-is-instruction-file (filepath)
+  ;;; ****
+  (if (string-match-p (concat aby-file-extension
+                              "$")
+                      filepath)
+      t
+    nil))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; ****f* aby/aby-is-plain-fragment
+;;; AUTHOR
+;;; Ruben Philipp <me@rubenphilipp.com>
+;;;
+;;; CREATED
+;;; 2023-04-19
+;;; 
+;;; DESCRIPTION
+;;; This function tests whether a given file path indicates a plain-fragment.
+;;; Cf. aby-is-instruction-file.
+;;;
+;;; ARGUMENTS
+;;; The absolute file path to the fragment file (e.g. via
+;;; aby-get-absolute-instruction-file-path). Must be a string.
+;;; 
+;;; RETURN VALUE
+;;; Either T, when the given file is assumed to be a plain-fragment, or NIL.
+;;; 
+;;; SYNOPSIS
+(defun aby-is-plain-fragment (filepath)
+  ;;; ****
+  (if (string-match-p aby-plain-fragment-indicator
+                      filepath)
+      t
+    nil))
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; ****f* aby/aby-get-absolute-instruction-file-path
@@ -324,6 +449,9 @@
     rep-rules))
 
 
+
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; ****f* aby/aby-insert
 ;;; AUTHOR
@@ -347,9 +475,16 @@
 ;;; IMPORTANT: As this function evaluates code, make sure that all .el files
 ;;; in your fragments directory are meticulously scrutinized. Otherwise, Aby
 ;;; might be able to do some harm to your Emacs.
+;;; Furthermore, as of 2023-04-20, it is possible to create so called
+;;; plain-fragments, which are fragment files which will be regarded as such
+;;; without being dependent of an instruction-file. The search scope for these
+;;; files is defined via aby-plain-fragment-indicator. Those files will be
+;;; simply inserted into the current buffer, omitting the replacement facilities
+;;; provided via aby-instruct. Only the aby-auto-replacements are performed
+;;; here.
 ;;;
 ;;; ARGUMENTS
-;;; A string spedifying the Aby fragment to open from the fragments directory
+;;; A string specifying the Aby fragment to open from the fragments directory
 ;;; (optional). When NIL, Aby prompts for a file.
 ;;; 
 ;;; RETURN VALUE
@@ -364,27 +499,61 @@
                    "/")
     ;; add the trailing slash
     (setf aby-fragments-dir (concat aby-fragments-dir "/")))
-  (let* ((fragments (aby-get-instruction-files))
+  (let* (;;; append aby aby fragment-files and
+         ;;; plain-fragments
+         ;;; RP  Thu Apr 20 00:35:36 2023
+         (fragments (append (aby-get-instruction-files)
+                            (aby-get-plain-fragment-files)))
          (fragment (if (car fragment)
                        (car fragment)
                      (completing-read "Which fragment should I add? "
                                       fragments)))
+         ;; test if it is a plain fragment
+         ;; RP  Thu Apr 20 01:32:22 2023
+         (is-plain-fragment (aby-is-plain-fragment fragment))
          ;; instruction file
+         ;; if the file is an instruction-file, get the
+         ;; instruction file path, otherwise the the absolute path
+         ;; from the prompt
          (fragment-i-file-path
-          (aby-get-absolute-instruction-file-path fragment))
+          (if is-plain-fragment
+              (concat aby-fragments-dir
+                      fragment)
+            (aby-get-absolute-instruction-file-path fragment)))
+         ;;; this is actually redundant, but kept for historical
+         ;;; reasons
+         ;; TODO:
+         ;; - remove
+         ;;   RP  Thu Apr 20 01:22:07 2023
+         ;;; RP  Thu Apr 20 01:07:10 2023
          (fragment-i-file fragment-i-file-path)
-         (rep-rules (aby-eval-file fragment-i-file)))
+         ;;; is the selected file an instruction file or
+         ;;; a plain-fragment??
+         ;;; RP  Thu Apr 20 00:41:15 2023
+         (has-instruction-file (aby-is-instruction-file fragment-i-file-path))
+         ;;; just parse replacement rules when selected
+         ;;; file is an instruction file
+         ;;; RP  Thu Apr 20 00:42:01 2023
+         (rep-rules (when has-instruction-file
+                      (aby-eval-file fragment-i-file))))
+    ;;; sanity checks
+    ;;; RP  Thu Apr 20 00:45:43 2023
     ;; test if fragment file is non-nil
     (when (string= "" fragment)
       (error "Please choose a fragment."))
-    ;; test if return value is an aby-list
-    (unless (eql (alist-get 'type rep-rules) 'aby-rep-rules)
-      (error "aby-insert: The returned list is not of type 'aby-rep-rules."))
     (let ((rep-list '())
           (fragment-data (aby-file-to-string
-                          (concat
-                           (file-name-directory fragment-i-file-path)
-                           (alist-get 'fragment-file rep-rules)))))
+                          ;;; if the file is an instruction-file,
+                          ;;; get the data from the alist value
+                          ;;; otherwise (when plain-fragment),
+                          ;;; simply use the path of the fragment
+                          ;;; file as source
+                          ;;; RP  Thu Apr 20 00:50:55 2023
+                          (if has-instruction-file
+                              (concat
+                               (file-name-directory fragment-i-file-path)
+                               (alist-get 'fragment-file rep-rules))
+                            fragment-i-file))))
       ;; add file-name-directory to rep-rules list
       (setf (alist-get 'aby-fragment-directory rep-list)
             (file-name-directory fragment-i-file-path))
@@ -392,56 +561,70 @@
       ;; RP  Sun Apr  9 18:09:09 2023
       (setf (alist-get 'buffer-file-name rep-list)
             (buffer-file-name))
-      ;; perform replacements
-      ;; static replacements
-      (cl-loop for rep in (alist-get 'static-rep rep-rules)
-               for varn = (nth 0 rep)
-               for regex = (nth 1 rep)
-               for replacement = (nth 2 rep)
-               for comment = (nth 3 rep)
-               do
-               (setf (alist-get varn rep-list) replacement)
-               ;; just do something when regex is non-NIL
-               (when regex
-                 (setf fragment-data
-                       (replace-regexp-in-string regex
-                                                 replacement
-                                                 fragment-data))))
-      ;; ask replacements
-      (cl-loop for rep in (alist-get 'ask-rep rep-rules)
-               for varn = (nth 0 rep)
-               for regex = (nth 1 rep)
-               for prompt = (nth 2 rep)
-               for comment = (nth 3 rep)
-               do
-               (let* ((prompt (if prompt
-                                  prompt
-                                (concat "Replace " regex " with: ")))
-                      (replacement (read-string prompt)))
+      ;;; just perform (fragment) replacements when the
+      ;;; file is an instruction file and not a plain-fragment
+      ;;; RP  Thu Apr 20 00:43:25 2023
+      (when has-instruction-file
+        ;; test if return value is an aby-list
+        ;;
+        ;; but just when the file is of type instruction-file
+        ;; RP  Thu Apr 20 00:46:37 2023
+        (unless (eql (alist-get 'type rep-rules) 'aby-rep-rules)
+          (error "aby-insert: The returned list is not of type ~
+                  'aby-rep-rules."))
+        ;; perform replacements
+        ;; static replacements
+        (cl-loop for rep in (alist-get 'static-rep rep-rules)
+                 for varn = (nth 0 rep)
+                 for regex = (nth 1 rep)
+                 for replacement = (nth 2 rep)
+                 for comment = (nth 3 rep)
+                 do
                  (setf (alist-get varn rep-list) replacement)
                  ;; just do something when regex is non-NIL
                  (when regex
                    (setf fragment-data
                          (replace-regexp-in-string regex
                                                    replacement
-                                                   fragment-data)))))
-      ;; dynamic replacements
-      (cl-loop for rep in (alist-get 'dynamic-rep rep-rules)
-               for varn = (nth 0 rep)
-               for regex = (nth 1 rep)
-               for rep-fun = (cadr (nth 2 rep))
-               for comment = (nth 3 rep)
-               do
-               (let ((replacement
-                      ;; call replacement function
-                      (funcall rep-fun rep-list)))
-                 (setf (alist-get varn rep-list) replacement)
-                 ;; just do something when regex is non-NIL
-                 (when regex
-                   (setf fragment-data
-                         (replace-regexp-in-string regex
-                                                   replacement
-                                                   fragment-data)))))
+                                                   fragment-data))))
+        ;; ask replacements
+        (cl-loop for rep in (alist-get 'ask-rep rep-rules)
+                 for varn = (nth 0 rep)
+                 for regex = (nth 1 rep)
+                 for prompt = (nth 2 rep)
+                 for comment = (nth 3 rep)
+                 do
+                 (let* ((prompt (if prompt
+                                    prompt
+                                  (concat "Replace " regex " with: ")))
+                        (replacement (read-string prompt)))
+                   (setf (alist-get varn rep-list) replacement)
+                   ;; just do something when regex is non-NIL
+                   (when regex
+                     (setf fragment-data
+                           (replace-regexp-in-string regex
+                                                     replacement
+                                                     fragment-data)))))
+        ;; dynamic replacements
+        (cl-loop for rep in (alist-get 'dynamic-rep rep-rules)
+                 for varn = (nth 0 rep)
+                 for regex = (nth 1 rep)
+                 for rep-fun = (cadr (nth 2 rep))
+                 for comment = (nth 3 rep)
+                 do
+                 (let ((replacement
+                        ;; call replacement function
+                        (funcall rep-fun rep-list)))
+                   (setf (alist-get varn rep-list) replacement)
+                   ;; just do something when regex is non-NIL
+                   (when regex
+                     (setf fragment-data
+                           (replace-regexp-in-string regex
+                                                     replacement
+                                                     fragment-data))))))
+      ;;; do auto-replacements for fragments with AND without
+      ;;; instruction files
+      ;;; RP  Thu Apr 20 00:44:36 2023
       ;; auto-replacements
       ;; just perform if auto-replacements are desired
       ;; (see 'omit-replacements in aby-instruct)
