@@ -90,3 +90,8 @@ Temporary Items
 *.icloud
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,emacs
+
+### further additions
+
+# ignore rsa key (IMPORTANT!!)
+doc_rsa
