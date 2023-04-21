@@ -95,3 +95,4 @@ Temporary Items
 
 # ignore rsa key (IMPORTANT!!)
 doc_rsa
+upload-doc.sh
