@@ -5,9 +5,9 @@
 
 [[file:examples/demo.gif]]
 
-Aby[fn:1] is a simple fragment/snippet manager for [[https://www.gnu.org/software/emacs/][Emacs]]. It lets you easily
-insert the contents of files from a designated snippets directory into an Emacs
-buffer by using the command ~aby-insert~.
+Aby[fn:1] (aby-mode) is a simple fragment/snippet manager for [[https://www.gnu.org/software/emacs/][Emacs]]. This
+minor-mode lets you easily insert the contents of files from a designated
+snippets directory into an Emacs buffer by using the command ~aby-insert~.
 
 Furthermore, Aby is capable of dynamically altering certain elements in a
 fragment file by using custom defined functions (cf. the documentation for
@@ -66,13 +66,17 @@ Fragments.[fn:2] Thus, the files ~simple-html.abyss.html~ and
 
 * Installation
 
-Place the files of this program on your hard-drive and load the files to
+Place the files of the /aby-mode/ on your hard-drive and load the files to
 your /Emacs/ configuration, e.g. via:
 
 #+begin_src elisp
-  (load "~/.emacs.d/aby/src/aby.el")
 
-  (require 'aby)
+  (add-to-list 'load-path "~/.emacs.d/aby/src/")
+  (require 'aby-mode)
+
+  ;; load your custom Aby config (optional, see below)
+  (load "~/someplace/aby-config.el")
+
 #+end_src
 
 These expressions could be placed in your ~.emacs~ file.
