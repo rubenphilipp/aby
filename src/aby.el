@@ -186,7 +186,11 @@
                                             ;;; on the hard drive
                                             ;;; RP  Thu Apr 20 00:13:14 2023
                                             (concat aby-file-extension
-                                                    "$")))
+                                                    "$")
+                                            nil nil
+                                            ;;; follow symlinks
+                                            ;;; RP  Tue Oct 31 14:22:01 2023
+                                            t))
         (rel-dir (expand-file-name aby-fragments-dir)))
     (mapcar #'(lambda (f)
                 (file-relative-name
