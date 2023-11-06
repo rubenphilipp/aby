@@ -122,7 +122,9 @@
 (defcustom aby-auto-replacements nil
   "A list of lists with default replacement rules. Aby will replace the
    regex in the first element of the list with the content of the second
-   element.")
+   element."
+  :group 'aby-mode
+  :type 'boolean)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; ****v* aby/aby-file-extension
@@ -134,7 +136,9 @@
 ;;; ****
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defcustom aby-file-extension "aby.el"
-  "The default extension for Aby instruction files.")
+  "The default extension for Aby instruction files."
+  :group 'aby-mode
+  :type 'string)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -151,8 +155,28 @@
 ;;; ****
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defcustom aby-plain-fragment-indicator ".abyss\\.?+\\..+$"
-  "The default RegEx for Aby plain-fragments.")
+  "The default RegEx for Aby plain-fragments."
+  :group 'aby-mode
+  :type 'string)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;; ****v* aby/aby-follow-symlinks
+;;; DESCRIPTION
+;;; This determines whether or not to follow (UNIX-)symlinks in the
+;;; aby-fragments-dir (e.g. when using aby-insert). 
+;;;
+;;; DEFAULT
+;;; T
+;;;
+;;; CREATED
+;;; 2023-11-06, Essen
+;;; ****
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defcustom aby-follow-symlinks t
+  "Follow symlinks in the fragments directory (e.g. when using aby-insert)."
+  :group 'aby-mode
+  :type 'boolean)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; ----------------------------------------------------------------------------
@@ -190,7 +214,7 @@
                                             nil nil
                                             ;;; follow symlinks
                                             ;;; RP  Tue Oct 31 14:22:01 2023
-                                            t))
+                                            aby-follow-symlinks))
         (rel-dir (expand-file-name aby-fragments-dir)))
     (mapcar #'(lambda (f)
                 (file-relative-name

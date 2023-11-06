@@ -9,7 +9,7 @@
 <script src="./robodoc.js"></script>
 <title>aby.el</title>
 <!-- Source: ./src/aby.el -->
-<!-- Generated with ROBODoc Version 4.99.44 (Oct 31 2021) -->
+<!-- Generated with ROBODoc Version 4.99.44 (Nov 13 2022) -->
 </head>
 <body>
 <div id="logo">
@@ -78,8 +78,24 @@
 </pre>
 
 <hr />
+<a name="aby2faby2dfollow2dsymlinks"></a>
+<a name="robo3"></a><h2>aby/aby-follow-symlinks [ Variables ]</h2>
+
+<p>[ <a href="#robo_top_of_doc">Top</a> ] [ <a href="./robo_variables.html#robo_top_of_doc">Variables</a> ]</p>
+<p class="item_name">DESCRIPTION</p>
+<pre> This determines whether or not to follow (UNIX-)symlinks in the
+ <a href="#robo4">aby-fragments-dir</a> (e.g. when using aby-insert). 
+
+ DEFAULT
+ T
+</pre>
+<p class="item_name">CREATED</p>
+<pre> 2023-11-06, Essen
+</pre>
+
+<hr />
 <a name="aby2faby2dfragments2ddir"></a>
-<a name="robo3"></a><h2>aby/aby-fragments-dir [ Variables ]</h2>
+<a name="robo4"></a><h2>aby/aby-fragments-dir [ Variables ]</h2>
 
 <p>[ <a href="#robo_top_of_doc">Top</a> ] [ <a href="./robo_variables.html#robo_top_of_doc">Variables</a> ]</p>
 <p class="item_name">DESCRIPTION</p>
@@ -91,7 +107,7 @@
 
 <hr />
 <a name="aby2faby2dget2dabsolute2dinstruction2dfile2dpath"></a>
-<a name="robo4"></a><h2>aby/aby-get-absolute-instruction-file-path [ Functions ]</h2>
+<a name="robo5"></a><h2>aby/aby-get-absolute-instruction-file-path [ Functions ]</h2>
 
 <p>[ <a href="#robo_top_of_doc">Top</a> ] [ <a href="./robo_functions.html#robo_top_of_doc">Functions</a> ]</p>
 <p class="item_name">AUTHOR</p>
@@ -102,7 +118,7 @@
 </pre>
 <p class="item_name">DESCRIPTION</p>
 <pre> Return the full file path of single Aby instruction file, e.g. retreived via
- <a href="#robo5">aby-get-instruction-files</a>.
+ <a href="#robo6">aby-get-instruction-files</a>.
 </pre>
 <p class="item_name">ARGUMENTS</p>
 <pre> The relative path to an Aby instruction-file.
@@ -116,7 +132,7 @@
 
 <hr />
 <a name="aby2faby2dget2dinstruction2dfiles"></a>
-<a name="robo5"></a><h2>aby/aby-get-instruction-files [ Functions ]</h2>
+<a name="robo6"></a><h2>aby/aby-get-instruction-files [ Functions ]</h2>
 
 <p>[ <a href="#robo_top_of_doc">Top</a> ] [ <a href="./robo_functions.html#robo_top_of_doc">Functions</a> ]</p>
 <p class="item_name">AUTHOR</p>
@@ -139,7 +155,7 @@
 
 <hr />
 <a name="aby2faby2dget2dplain2dfragment2dfiles"></a>
-<a name="robo6"></a><h2>aby/aby-get-plain-fragment-files [ Functions ]</h2>
+<a name="robo7"></a><h2>aby/aby-get-plain-fragment-files [ Functions ]</h2>
 
 <p>[ <a href="#robo_top_of_doc">Top</a> ] [ <a href="./robo_functions.html#robo_top_of_doc">Functions</a> ]</p>
 <p class="item_name">AUTHOR</p>
@@ -162,7 +178,7 @@
 
 <hr />
 <a name="aby2faby2dinsert"></a>
-<a name="robo7"></a><h2>aby/aby-insert [ Functions ]</h2>
+<a name="robo8"></a><h2>aby/aby-insert [ Functions ]</h2>
 
 <p>[ <a href="#robo_top_of_doc">Top</a> ] [ <a href="./robo_functions.html#robo_top_of_doc">Functions</a> ]</p>
 <p class="item_name">AUTHOR</p>
@@ -189,9 +205,9 @@
  Furthermore, as of 2023-04-20, it is possible to create so called
  plain-fragments, which are fragment files which will be regarded as such
  without being dependent of an instruction-file. The search scope for these
- files is defined via <a href="#robo11">aby-plain-fragment-indicator</a>. Those files will be
+ files is defined via <a href="#robo12">aby-plain-fragment-indicator</a>. Those files will be
  simply inserted into the current buffer, omitting the replacement facilities
- provided via <a href="#robo8">aby-instruct</a>. Only the <a href="#robo0">aby-auto-replacements</a> are performed
+ provided via <a href="#robo9">aby-instruct</a>. Only the <a href="#robo0">aby-auto-replacements</a> are performed
  here.
 </pre>
 <p class="item_name">ARGUMENTS</p>
@@ -207,7 +223,7 @@
 
 <hr />
 <a name="aby2faby2dinstruct"></a>
-<a name="robo8"></a><h2>aby/aby-instruct [ Functions ]</h2>
+<a name="robo9"></a><h2>aby/aby-instruct [ Functions ]</h2>
 
 <p>[ <a href="#robo_top_of_doc">Top</a> ] [ <a href="./robo_functions.html#robo_top_of_doc">Functions</a> ]</p>
 <p class="item_name">AUTHOR</p>
@@ -218,9 +234,9 @@
 </pre>
 <p class="item_name">DESCRIPTION</p>
 <pre> This function is used in Aby instruction files to generate the
- replacements list which will then be parsed by <a href="#robo7">aby-insert</a>.
+ replacements list which will then be parsed by <a href="#robo8">aby-insert</a>.
  It takes the replacements and instructions for preparing the fragments
- in the <a href="#robo7">aby-insert</a> function. These are mainly replacement rules (either
+ in the <a href="#robo8">aby-insert</a> function. These are mainly replacement rules (either
  interactively, by prompting for completions or static values). 
 </pre>
 <p class="item_name">ARGUMENTS</p>
@@ -234,7 +250,7 @@
     ;; ...
     (varn regexn valuen commentn))
    The first element must be a symbol which serves as the index for the
-   association list which is parsed during the <a href="#robo7">aby-insert</a> prodecure. This
+   association list which is parsed during the <a href="#robo8">aby-insert</a> prodecure. This
    enables accessing the value via a dynamic-rep.
    The comment (string) serves documentation purposes and is optional. 
    Default= NIL.
@@ -258,7 +274,7 @@
    the replacements association list as first argument and returns the
    replacement value as a string.
    The comment (string) serves documentation purposes and is optional.
-   NB: <a href="#robo7">aby-insert</a> automatically adds some elements to the replacements
+   NB: <a href="#robo8">aby-insert</a> automatically adds some elements to the replacements
        association list. These are relevant values which are not directly
        available during the execution of the code in the instruction file
        and are thus passed to the the dynamic-replacement function via the
@@ -295,7 +311,7 @@
 
 <hr />
 <a name="aby2faby2dis2dinstruction2dfile"></a>
-<a name="robo9"></a><h2>aby/aby-is-instruction-file [ Functions ]</h2>
+<a name="robo10"></a><h2>aby/aby-is-instruction-file [ Functions ]</h2>
 
 <p>[ <a href="#robo_top_of_doc">Top</a> ] [ <a href="./robo_functions.html#robo_top_of_doc">Functions</a> ]</p>
 <p class="item_name">AUTHOR</p>
@@ -322,7 +338,7 @@
 
 <hr />
 <a name="aby2faby2dis2dplain2dfragment"></a>
-<a name="robo10"></a><h2>aby/aby-is-plain-fragment [ Functions ]</h2>
+<a name="robo11"></a><h2>aby/aby-is-plain-fragment [ Functions ]</h2>
 
 <p>[ <a href="#robo_top_of_doc">Top</a> ] [ <a href="./robo_functions.html#robo_top_of_doc">Functions</a> ]</p>
 <p class="item_name">AUTHOR</p>
@@ -333,7 +349,7 @@
 </pre>
 <p class="item_name">DESCRIPTION</p>
 <pre> This function tests whether a given file path indicates a plain-fragment.
- Cf. <a href="#robo9">aby-is-instruction-file</a>.
+ Cf. <a href="#robo10">aby-is-instruction-file</a>.
 </pre>
 <p class="item_name">ARGUMENTS</p>
 <pre> The absolute file path to the fragment file (e.g. via
@@ -348,12 +364,12 @@
 
 <hr />
 <a name="aby2faby2dplain2dfragment2dindicator"></a>
-<a name="robo11"></a><h2>aby/aby-plain-fragment-indicator [ Variables ]</h2>
+<a name="robo12"></a><h2>aby/aby-plain-fragment-indicator [ Variables ]</h2>
 
 <p>[ <a href="#robo_top_of_doc">Top</a> ] [ <a href="./robo_variables.html#robo_top_of_doc">Variables</a> ]</p>
 <p class="item_name">DESCRIPTION</p>
 <pre> This is an Elisp RegExp indicating the files which should be interpreted
- as plains-fragments. These files will be inserted by <a href="#robo7">aby-insert</a> without
+ as plains-fragments. These files will be inserted by <a href="#robo8">aby-insert</a> without
  evaluating an instruction-file. The only replacements which will take place
  are those defined via <a href="#robo0">aby-auto-replacements</a>.
  Must be of type string.
@@ -364,7 +380,7 @@
 
 <hr />
 <a name="aby2feval2dfile"></a>
-<a name="robo12"></a><h2>aby/eval-file [ Functions ]</h2>
+<a name="robo13"></a><h2>aby/eval-file [ Functions ]</h2>
 
 <p>[ <a href="#robo_top_of_doc">Top</a> ] [ <a href="./robo_functions.html#robo_top_of_doc">Functions</a> ]</p>
 <p class="item_name">AUTHOR</p>
@@ -389,7 +405,7 @@
 
 </div> <!-- content -->
 <div id="footer">
-<p>Generated from ./src/aby.el with <a href="http://www.xs4all.nl/~rfsber/Robo/robodoc.html">ROBODoc</a> V4.99.44 on 2023-04-20 11:31:57</p>
+<p>Generated from ./src/aby.el with <a href="http://www.xs4all.nl/~rfsber/Robo/robodoc.html">ROBODoc</a> V4.99.44 on 2023-11-06 21:38:47</p>
 </div> <!-- footer -->
 </body>
 </html>
