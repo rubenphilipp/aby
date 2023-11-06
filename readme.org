@@ -5,7 +5,7 @@
 
 [[file:examples/demo.gif]]
 
-Aby[fn:1] (aby-mode) is a simple fragment/snippet manager for [[https://www.gnu.org/software/emacs/][Emacs]]. This
+Aby[^1] (aby-mode) is a simple fragment/snippet manager for [[https://www.gnu.org/software/emacs/][Emacs]]. This
 minor-mode lets you easily insert the contents of files from a designated
 snippets directory into an Emacs buffer by using the command ~aby-insert~.
 
@@ -106,6 +106,6 @@ and ~aby/aby-insert~.
 
 * Footnotes
 
-[fn:1] https://en.wikipedia.org/wiki/Aby_Warburg 
+[^1] https://en.wikipedia.org/wiki/Aby_Warburg 
 [fn:2] For more on Elisp RegEx (Regular Expressions), cf. the [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Regular-Expressions.html][Emacs manual]] and
 the [[https://www.emacswiki.org/emacs/RegularExpression][EmacsWiki]].
