@@ -1,0 +1,49 @@
+name: Generate and Deploy ROBODoc Documentation
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential automake autoconf
+
+      - name: Build and install ROBODoc
+        run: |
+          # Clone ROBODoc repository
+          git clone https://github.com/gumpu/ROBODoc.git
+          cd ROBODoc
+
+          # Regenerate missing build files
+          autoreconf --install
+          
+          # Build and install
+          ./configure
+          make
+          sudo make install
+          cd ..
+
+      - name: Generate Documentation
+        run: |
+          # Create output directory
+          mkdir -p doc
+          
+          # Run ROBODoc using your existing config file
+          robodoc --rc robodoc.rc
+          
+          # Create .nojekyll file to disable Jekyll processing
+          touch doc/.nojekyll
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages
+          folder: doc  # Adjust this to match your output directory
